@@ -26,13 +26,15 @@ public class SearchController {
   @Autowired
   private HistoryService historyservice;
 
+  //adicionar o tipo como parametro tbm
   @GetMapping
   public Map<String, Object> search(
       @RequestParam String title,
       @RequestParam(defaultValue = "1") int page,
+      @RequestParam String type,
       @AuthenticationPrincipal User user) {
 
-    Map<String, Object> response = omdbService.searchByTitle(title, page);
+    Map<String, Object> response = omdbService.searchByTitle(title, page, type);
 
     if (user != null) {
       historyservice.saveSearch(user, title);

@@ -17,7 +17,7 @@ public class OmdbService {
   @Autowired
   private OmdbConfig config;
 
-  public Map<String, Object> searchByTitle(String title, int page) {
+  public Map<String, Object> searchByTitle(String title, int page, String type) {
     String url = String.format(
         "%s?s=%s&page=%d&apikey=%s",
         config.getBaseUrl(),
@@ -28,5 +28,17 @@ public class OmdbService {
     return restTemplate.getForObject(url, Map.class);
 
   }
+
+
+  public Map<String, Object> getDetailsById(String imdbId) {
+    String url = String.format (
+         "%s?i=%s&plot=full&apikey=%s",
+         config.getBaseUrl(),
+         imdbId,
+         config.getApiKey()
+        );
+
+      return restTemplate.getForObject(url, Map.class);
+}
 
 }

@@ -1,16 +1,16 @@
 package fatec.pg.br.ApiOmdb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import fatec.pg.br.ApiOmdb.service.HistoryService;
+import fatec.pg.br.ApiOmdb.service.OmdbService;
 import fatec.pg.br.ApiOmdb.dto.response.SearchHistoryResponse;
-import fatec.pg.br.ApiOmdb.model.SearchHistory;
 import fatec.pg.br.ApiOmdb.model.User;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
-import java.time.LocalDateTime;
+import java.util.Map;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
@@ -19,6 +19,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 public class HistoryController {
   @Autowired
   private HistoryService historyService;
+  @Autowired OmdbService omdbService;
 
   @GetMapping
   public List<SearchHistoryResponse> getHistory(@AuthenticationPrincipal User user) {
@@ -30,4 +31,8 @@ public class HistoryController {
         .toList();
   }
 
+  @GetMapping("/details/{imdbId}")
+  public Map<String, Object> details(@PathVariable String imdbId) {
+    return omdbService.getDetailsById(imdbId);
+  }
 }
