@@ -13,7 +13,8 @@ public class SecurityConfig {
       .csrf(csrf -> csrf.disable())
 
       .authorizeHttpRequests(auth -> auth 
-            .anyRequest().permitAll()
+          .requestMatchers("/history/**").authenticated() 
+          .anyRequest().permitAll()
           );
 
     http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
