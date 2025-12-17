@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import fatec.pg.br.ApiOmdb.dto.response.LoginResponse;
 import fatec.pg.br.ApiOmdb.dto.response.UserResponse;
 import fatec.pg.br.ApiOmdb.repository.UserRepository;
+import fatec.pg.br.ApiOmdb.config.util.JwtUtil;
 import fatec.pg.br.ApiOmdb.dto.request.LoginRequest;
 import fatec.pg.br.ApiOmdb.dto.request.RegisterUserRequest;
 import jakarta.persistence.*;
@@ -35,7 +36,9 @@ public class UserService {
 
     User savedUser = userRepository.save(user);
 
-      return new UserResponse(savedUser.getId(), savedUser.getUsername());
+    String token = JwtUtil.generateToken(savedUser.getUsername());
+
+      return new UserResponse(savedUser.getId(), savedUser.getUsername(), token);
   }
 
   public LoginResponse login(LoginRequest request) {
@@ -46,6 +49,8 @@ public class UserService {
       throw new RuntimeException("incorrect password");
     }
 
-    return new LoginResponse(user.getId(), user.getUsername(),null);
+    String token = JwtUtil.generateToken(user.getUsername());
+
+    return new LoginResponse(user.getId(), user.getUsername(), token);
   }
 }
