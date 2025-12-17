@@ -14,7 +14,7 @@ import fatec.pg.br.ApiOmdb.dto.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
   @Autowired

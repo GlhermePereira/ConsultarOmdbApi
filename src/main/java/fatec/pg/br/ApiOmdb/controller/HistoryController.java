@@ -9,7 +9,6 @@ import fatec.pg.br.ApiOmdb.dto.response.SearchHistoryResponse;
 import fatec.pg.br.ApiOmdb.model.User;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
@@ -31,8 +30,4 @@ public class HistoryController {
         .toList();
   }
 
-  @GetMapping("/details/{imdbId}")
-  public Map<String, Object> details(@PathVariable String imdbId) {
-    return omdbService.getDetailsById(imdbId);
-  }
 }
